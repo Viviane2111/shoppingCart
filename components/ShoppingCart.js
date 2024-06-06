@@ -1,39 +1,75 @@
-// ShoppingCart.js
-import { useCart } from "./CartContext";
+// components/ShoppingCart.js
+import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../store/cartSlice";
 
 export default function ShoppingCart() {
-  const {cart, clearCart, cartTotal, cartTax, cartGrandTotal } = useCart();
+  const dispatch = useDispatch();
+  const cart = useSelector(state => state.cart.items);
+
+  // Vider le panier
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  }
 
   return (
     <>
-      <div className="cart-container">
+      <div className="absolute top-16 right-0 bg-white shadow-lg rounded-lg mt-6 mr-10 p-4 w-65 z-50">
         <button
-          onClick={clearCart}
-          className="bg-red-500 text-white px-4 py-2 rounded mb-4"
+          className="bg-amber-600 text-white"
+          onClick={handleClearCart}
         >
           Vider le panier
         </button>
-        <div className="text-center">
-          {cart.map((product) => (
-            <div key={product.id} className="flex flex-col mb-5">
-              <span>
-                {product.quantity} x {product.name}
-              </span>
-              <span className="ml-2">
-                {(product.price * product.quantity).toFixed(2)} €
-              </span>
+        {cart.length === 0 ? (
+          <p className="mt-4 text-center text-red-600 text-lg text-bold">Le panier est vide ❗</p>
+        ) : (
+          <>
+            <ul>
+              {cart.map((item, index) => (
+                <li key={index} className="mt-5 text-xl px-1">
+                  <span>{item.name}</span> - <span>{item.quantity}x</span> -{" "}
+                  <span>{item.price.toFixed(2)} €</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 text-2xl border rounded-xl shadow p-2 bg-slate-50">
+              <p className="text-center mb-1">
+                Nombre total d'articles :{" "}
+                {cart.reduce((total, item) => total + item.quantity, 0)}
+              </p>
+              <p className="text-center mb-1">
+                Total hors-taxe :{" "}
+                {cart
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  )
+                  .toFixed(2)}{" "}
+                €
+              </p>
+              <p className="text-center mb-1">
+                Taxes :{" "}
+                {(
+                  cart.reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  ) * 0.2
+                ).toFixed(2)}{" "}
+                €
+              </p>
+              <p className="text-center mb-1">
+                Total :{" "}
+                {(
+                  cart.reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  ) * 1.2
+                ).toFixed(2)}{" "}
+                €
+              </p>
             </div>
-          ))}
-        </div>
-        <div className="mt-5">
-          <p className="text-center">
-            Nombre total d'articles :{" "}
-            {cart.reduce((total, product) => total + product.quantity, 0)}
-          </p>
-          <p className="text-center">Total hors-taxe : {cartTotal.toFixed(2)} €</p>
-          <p className="text-center">Taxes : {cartTax.toFixed(2)} €</p>
-          <p className="text-center">Total : {cartGrandTotal.toFixed(2)} €</p>
-        </div>
+          </>
+        )}
       </div>
     </>
   );

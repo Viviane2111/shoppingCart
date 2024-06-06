@@ -1,16 +1,23 @@
 // Home.js
+// import { useCart } from "./CartContext";
 import { useState } from "react";
-import { useCart } from "./CartContext";
+import { useDispatch } from "react-redux";
+import { addItem } from "../store/cartSlice.js";
 import products from "../data/products";
 import DessertCard from "./DessertCard";
 import ShoppingCart from "./ShoppingCart.js";
 
 export default function Home() {
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
+  const dispatch = useDispatch();
   const [isCartVisible, setisCartVisible] = useState(false);
 
   const toggleCatVisible = () => {
     setisCartVisible(!isCartVisible);
+  }
+
+  const handleAddToCart = (product) => {
+    dispatch(addItem(product));
   }
 
   return (
@@ -33,7 +40,7 @@ export default function Home() {
             <DessertCard 
               key={product.id} 
               product={product} 
-              onAddToCart={() => addToCart(product)}
+              onAddToCart={() => handleAddToCart(product)}
             />
           ))}
         </div>
