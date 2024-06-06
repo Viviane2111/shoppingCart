@@ -13,7 +13,7 @@ export default function ShoppingCart() {
 
   return (
     <>
-      <div className="absolute top-16 right-0 bg-white shadow-lg rounded-lg mt-6 mr-10 p-4 w-65 z-50">
+      <div className="absolute top-16 right-0 bg-slate-500 shadow-md rounded-lg mt-6 -mr-44 p-4 w-65 z-50">
         <button
           className="bg-amber-600 text-white"
           onClick={handleClearCart}
@@ -26,13 +26,13 @@ export default function ShoppingCart() {
           <>
             <ul>
               {cart.map((item, index) => (
-                <li key={index} className="mt-5 text-xl px-1">
+                <li key={index} className="mt-5 text-xl px-1 text-slate-100">
                   <span>{item.name}</span> - <span>{item.quantity}x</span> -{" "}
                   <span>{item.price.toFixed(2)} €</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-6 text-2xl border rounded-xl shadow p-2 bg-slate-50">
+            <div className="mt-6 text-2xl border rounded-xl shadow p-2 bg-slate-100">
               <p className="text-center mb-1">
                 Nombre total d'articles :{" "}
                 {cart.reduce((total, item) => total + item.quantity, 0)}

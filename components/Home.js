@@ -42,7 +42,7 @@ export default function Home() {
               value={selectCategory}
               className="border border-stone-300 rounded px-2 py-3 w-80 "
             >
-              <option value="">Toutes les catégories</option>
+              <option value="">🔍 Toutes les catégories</option>
               {Array.from(
                 new Set(products.map((product) => product.category))
               ).map((category, index) => (

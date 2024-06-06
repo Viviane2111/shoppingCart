@@ -23,6 +23,9 @@ body {
 .container {
   width: 100%;
 }
+.loupe{
+  margin-left: 10px;
+}
 button {
   display: block;
   cursor: pointer;
