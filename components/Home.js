@@ -30,8 +30,8 @@ export default function Home() {
     : products;
 
   return (
-    <div>
-      <header className="h-20 flex items-center ">
+    <div className="container">
+      <header className="sticky top-0 z-50 bg-gray-800 h-20 flex items-center">
         <div className="">
           <h1 className="text-indigo-50 w-auto ml-10 my-[25px] text-3xl">
             Page des desserts
@@ -40,7 +40,7 @@ export default function Home() {
             <select
               onChange={(e) => handleCategoryFilter(e.target.value)}
               value={selectCategory}
-              className="border border-stone-300 rounded px-2 py-3 w-80 mt-2"
+              className="border border-stone-300 rounded px-2 py-3 w-80 "
             >
               <option value="">Toutes les catégories</option>
               {Array.from(
